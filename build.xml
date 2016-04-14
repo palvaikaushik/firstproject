@@ -1,0 +1,51 @@
+<!--?xml version="1.0" encoding="UTF-8"?/-->
+<project name="demoproject" default="starttomcat">
+<property name="tomcat" location="D:\apache-tomcat-7.0.68"/>
+<property name="workdir" value="c:\training\work"/>
+<target name="clean">
+<delete dir="${workdir}"/>
+</target>
+
+<target name="init" depends="clean">
+<mkdir dir="${workdir}"/>
+<mkdir dir="${workdir}/WEB-INF/classes"/>
+</target>
+
+<!-- target name="copy" depends="init">
+  <copy todir="lib">
+    <fileset dir="${tomcat}/lib"/>
+  </copy>
+</target -->
+
+<target name="compile" depends="init">
+<javac srcdir="src"
+destdir="${workdir}/WEB-INF/classes"
+classpath="${tomcat}/lib/servlet-api.jar"
+/>
+
+</target>
+<target name="copywebfiles" depends="compile">
+    <copy file="index.html" todir="${workdir}"/>
+    <copy file="WEB-INF/web.xml" todir="${workdir}/WEB-INF/"/>
+ </target>
+  
+   <target name="war" depends="copywebfiles,compile,init">
+   <war destfile="${workdir}/demo.war" webxml="web-inf/web.xml">
+  <fileset dir="${workdir}"/>
+</war>
+</target>
+<target name="deploy" depends="war">
+<copy file="${workdir}/demo.war" todir="${tomcat}/webapps"/>
+<!--copy todir="${tomcat}/webapps">
+    <fileset dir="war"/>
+  </copy-->
+</target>
+<target name="starttomcat" depends="deploy">
+  <exec executable="${tomcat}/bin/startup.bat">
+    <!--arg value="startup.bat"/-->
+  </exec>
+    
+</target>
+
+
+</project>
