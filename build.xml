@@ -41,11 +41,11 @@ classpath="${tomcat}/lib/servlet-api.jar"
   </copy-->
 </target>
 <target name="starttomcat" depends="deploy">
-<condition property=¨file.extension" value="bat">
+<condition property="file.extension" value="bat">
  <os family="windows"/>
 </condition>
-<condition property=¨file.extension¨ value=¨sh¨>
-<os family=¨unix¨/>
+<condition property="file.extension" value="sh">
+<os family="unix"/>
 </condition>
   <exec executable="${tomcat}/bin/startup.${file.extension}">
     <!--arg value="startup.bat"/-->
