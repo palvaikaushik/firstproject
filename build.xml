@@ -30,7 +30,7 @@ classpath="${tomcat}/lib/servlet-api.jar"
  </target>
   
    <target name="war" depends="copywebfiles,compile,init">
-   <war destfile="${workdir}/demo.war" webxml="web-inf/web.xml">
+   <war destfile="${workdir}/demo.war" webxml="WEB-INF/web.xml">
   <fileset dir="${workdir}"/>
 </war>
 </target>
@@ -41,7 +41,13 @@ classpath="${tomcat}/lib/servlet-api.jar"
   </copy-->
 </target>
 <target name="starttomcat" depends="deploy">
-  <exec executable="${tomcat}/bin/startup.bat">
+<condition property=¨file.extension" value="bat">
+ <os family="windows"/>
+</condition>
+<condition property=¨file.extension¨ value=¨sh¨>
+<os family=¨unix¨/>
+</condition>
+  <exec executable="${tomcat}/bin/startup.${file.extension}">
     <!--arg value="startup.bat"/-->
   </exec>
     
